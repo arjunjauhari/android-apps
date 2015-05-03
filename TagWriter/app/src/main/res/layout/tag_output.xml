@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:text="Tag says: "
+        android:textSize="33sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/out1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/aar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/properties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:text="Tag properties: "
+        android:textSize="33sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/prop1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/prop2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/prop3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/prop4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:paddingTop="10dp"
+        android:text="Sample"
+        android:textSize="22sp" />
+
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TagWriter</string>
+    <string name="hello_world">Hello, Welcome to TagWriter!</string>
+    <string name="action_settings">Settings</string>
+    <string name="debug_key">AJ: </string>
+    <string name="no_nfc">NFC not available</string>
+    <string name="tag_detected">Tag Detected: Press button</string>
+
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WOTW</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_jwky">JWKY</string>
+    <string name="title_activity_nasa">NASA</string>
+    <string name="title_activity_rb">RbActivity</string>
+    <string name="wiki">Jabberwocky Wiki</string>
+    <string name="pic">Picture</string>
+
+</resources>
