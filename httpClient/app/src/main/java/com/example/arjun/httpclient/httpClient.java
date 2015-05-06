@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,11 +26,13 @@ public class httpClient extends ActionBarActivity {
 
     private static final String url = "www.google.com";
     private static final String DEBUG_TAG = "httpClient";
+    private TextView textView_out;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_http_client);
+        textView_out = (TextView) findViewById(R.id.textView_out);
 
         // Check for network availability
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -52,32 +58,52 @@ public class httpClient extends ActionBarActivity {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(String result) {
-            textView.setText(result);
+        protected void onPostExecute(Object result) {
+            textView_out.setText(result.toString());
         }
 
     }
 
     private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
+        int len = 500;
 
-        URL url = new URL(myurl);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000); // milliseconds
-        conn.setConnectTimeout(15000); //milliseconds
-        conn.setRequestMethod("GET"); //this is def also
-        conn.setDoInput(true);
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000); // milliseconds: time before read expires, def is 0(indefinitely)
+            conn.setConnectTimeout(15000); //milliseconds
+            conn.setRequestMethod("GET"); //this is def method also
+            conn.setDoInput(true);
 
-        //Start the query
-        conn.connect();
-        int response = conn.getResponseCode();
-        Log.d(DEBUG_TAG, "The response is: " + response);
+            //Start the query
+            conn.connect();
+            int response = conn.getResponseCode();
+            Log.d(DEBUG_TAG, "The response is: " + response);
 
-        is = conn.getInputStream();
+            is = conn.getInputStream(); //this is currently in byte format, therefore needs to be converted into one or the readable type
 
-
-
+            // Convert the InputStream into a string
+            String contentAsString = readIt(is, len);
+            return contentAsString;
+        } finally {
+            //this code always run after try exited no matter at what point the try code exited
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+            if (is != null) {
+                is.close();
+            }
+        }
     }
+
+    private String readIt(InputStream stream, int len) throws UnsupportedEncodingException, IOException {
+        Reader reader = null; // this is base class for any reader type
+        reader = new InputStreamReader(stream, "UTF-8"); //converts the bytes stream to character stream, format used for decoding is UTF-8
+        char[] buffer = new char[len];
+        reader.read(buffer);    //reads a character from reader and puts it into buffer array starting from offset 0
+        return new String(buffer);  //construct a string based on buffer and return it
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
