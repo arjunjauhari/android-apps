@@ -24,7 +24,7 @@ import java.net.URL;
 
 public class httpClient extends ActionBarActivity {
 
-    private static final String url = "www.google.com";
+    private static final String url = "http://www.google.com";
     private static final String DEBUG_TAG = "httpClient";
     private TextView textView_out;
 
@@ -66,7 +66,7 @@ public class httpClient extends ActionBarActivity {
 
     private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
-        int len = 500;
+        int len = 1500;
 
         try {
             URL url = new URL(myurl);
