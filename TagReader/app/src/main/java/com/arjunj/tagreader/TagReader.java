@@ -32,6 +32,8 @@ public class TagReader extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag_reader);
 
+        Log.d(TAG, "Inside oncreate");
+
         // get the adapter for NFC on the phone
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
