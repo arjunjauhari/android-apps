@@ -1,5 +1,6 @@
-package com.arjunj.wificonnector;
+package com.example.arjun.projectx_v1;
 
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
-
-public class wifiConnector extends ActionBarActivity {
+/**
+ * Created by arjun on 19/5/15.
+ */
+public class wifiConnector extends Fragment {
 
     public static final String TAG = "wifiConnector";
     private WifiManager mwifiManager;
@@ -34,17 +36,22 @@ public class wifiConnector extends ActionBarActivity {
     private WifiConfiguration mwifiConfig;
     private int netId;
 
+    public wifiConnector() {
+        // required default constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wifi_connector);
-        list = (ListView) findViewById(R.id.listView1);
+//        setContentView(R.layout.activity_wifi_connector);
+//        list = (ListView) findViewById(R.id.listView1);
 
         // get an object for WifiManager
-        mwifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        // ??? to check whether getapplicationcontext required or not ???
+        mwifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (!mwifiManager.isWifiEnabled()) {
-            Toast.makeText(this, "Enabling WiFi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Enabling WiFi", Toast.LENGTH_SHORT).show();
             mwifiManager.setWifiEnabled(true);
         }
 
@@ -61,41 +68,19 @@ public class wifiConnector extends ActionBarActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        getActivity().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        unregisterReceiver(wifiReceiver);
+        getActivity().unregisterReceiver(wifiReceiver);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wifi_connector, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
 
         //remove the details of the network: to avoid manual connection
@@ -103,7 +88,7 @@ public class wifiConnector extends ActionBarActivity {
         mwifiManager.setWifiEnabled(false);
     }
 
-    private void establishConnection () {
+    private void establishConnection() {
         mwifiConfig = new WifiConfiguration();
 
         mwifiConfig.BSSID = bssid;
@@ -115,12 +100,12 @@ public class wifiConnector extends ActionBarActivity {
         netId = mwifiManager.addNetwork(mwifiConfig);
 
         if (netId == -1) {
-            Toast.makeText(this, "Network failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Network failed", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!mwifiManager.enableNetwork(netId, true)) {
-            Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Connection failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -183,8 +168,8 @@ public class wifiConnector extends ActionBarActivity {
                     Log.d(TAG, mwifiScanList.get(i).SSID + ", " + mwifiScanList.get(i).BSSID + numNetss[i]);
                 }
 
-                list.setAdapter(new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_list_item_1, numNetss));
+//                list.setAdapter(new ArrayAdapter<String>(getActivity(),
+//                        android.R.layout.simple_list_item_1, numNetss));
             }
         }
 
