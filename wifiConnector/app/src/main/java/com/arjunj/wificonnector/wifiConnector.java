@@ -63,13 +63,13 @@ public class wifiConnector extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        //registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(wifiReceiver);
+        //unregisterReceiver(wifiReceiver);
     }
 
     @Override
@@ -95,12 +95,11 @@ public class wifiConnector extends ActionBarActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
         //remove the details of the network: to avoid manual connection
-        mwifiManager.removeNetwork(netId);
-        mwifiManager.setWifiEnabled(false);
+        this.destroyConnection();
     }
 
     private void establishConnection () {
@@ -122,6 +121,34 @@ public class wifiConnector extends ActionBarActivity {
         if (!mwifiManager.enableNetwork(netId, true)) {
             Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void destroyConnection() {
+
+        Log.d(TAG, "destroyConnection");
+
+        Log.d(TAG, "" + mwifiManager.getWifiState());
+
+        mwifiManager.disconnect();
+
+        if (mwifiManager.disableNetwork(netId)) {
+            Log.d(TAG, "network successfully disabled");
+        } else {
+            Log.d(TAG, "network not disabled");
+        }
+
+        if (mwifiManager.removeNetwork(netId)) {
+            Log.d(TAG, "network successfully removed");
+        } else {
+            Log.d(TAG, "network not removed");
+        }
+
+        if (mwifiManager.setWifiEnabled(false)) {
+            Log.d(TAG, "wifi disabled");
+        } else {
+            Log.d(TAG, "unable to disable wifi");
+        }
+
     }
 
     private void logNumNetworks() {

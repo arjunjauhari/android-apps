@@ -68,6 +68,9 @@ public class ProjectX extends ActionBarActivity {
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             readNFC();
         }
+
+        // adding the fragment
+        getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
     }
 
     @Override

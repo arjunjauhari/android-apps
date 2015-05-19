@@ -25,7 +25,8 @@ import java.nio.charset.Charset;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "Main Activity";
-    public static final String readerName = "com.arjunj.tagreader";
+    //public static final String readerName = "com.arjunj.tagreader";
+    public static final String readerName = "com.example.arjun.projectx_v1";
     public static final String wifiSSID = "ProjectX";
     public static final String wifiPASS = "smile";
     private EditText mInputID;

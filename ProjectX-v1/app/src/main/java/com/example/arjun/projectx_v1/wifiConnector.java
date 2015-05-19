@@ -27,12 +27,11 @@ public class wifiConnector extends Fragment {
 
     public static final String TAG = "wifiConnector";
     private WifiManager mwifiManager;
-    private ListView list;
     private WifiScanReceiver wifiReceiver;
     private static final String ssid = "Nexus 5";
     private static final String password = "mynexus5";
     //private static final String bssid = "c0:cb:38:97:d8:bb";
-    private static final String bssid = "02:1a:11:f6:51:d9";
+    private static final String bssid = "02:1a:11:f4:fc:8f";
     private WifiConfiguration mwifiConfig;
     private int netId;
 
@@ -62,33 +61,38 @@ public class wifiConnector extends Fragment {
 
         // get config nets detail
         //this.logConfiguredNetworks();
-        this.establishConnection();
-
-        this.logConnectionInfo();
+//        this.establishConnection();
+//
+//        this.logConnectionInfo();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         getActivity().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+
+        // establish connection
+        this.establishConnection();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(wifiReceiver);
+        this.destroyConnection();
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
 
         //remove the details of the network: to avoid manual connection
-        mwifiManager.removeNetwork(netId);
-        mwifiManager.setWifiEnabled(false);
+        //this.destroyConnection();
     }
 
     private void establishConnection() {
+
+        Log.d(TAG, "establishConnection");
         mwifiConfig = new WifiConfiguration();
 
         mwifiConfig.BSSID = bssid;
@@ -105,8 +109,36 @@ public class wifiConnector extends Fragment {
         }
 
         if (!mwifiManager.enableNetwork(netId, true)) {
-            Toast.makeText(getActivity(), "Connection failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Connection failed", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void destroyConnection() {
+
+        Log.d(TAG, "destroyConnection");
+
+        Log.d(TAG, "" + mwifiManager.getWifiState());
+
+        mwifiManager.disconnect();
+
+        if (mwifiManager.disableNetwork(netId)) {
+            Log.d(TAG, "network successfully disabled");
+        } else {
+            Log.d(TAG, "network not disabled");
+        }
+
+        if (mwifiManager.removeNetwork(netId)) {
+            Log.d(TAG, "network successfully removed");
+        } else {
+            Log.d(TAG, "network not removed");
+        }
+
+        if (mwifiManager.setWifiEnabled(false)) {
+            Log.d(TAG, "wifi disabled");
+        } else {
+            Log.d(TAG, "unable to disable wifi");
+        }
+
     }
 
     private void logNumNetworks() {
@@ -135,6 +167,8 @@ public class wifiConnector extends Fragment {
     }
 
     private void logConnectionInfo() {
+        Log.d(TAG, "logConnectionInfo");
+
         // get current connection info
         WifiInfo mwifiInfo = mwifiManager.getConnectionInfo();
 
