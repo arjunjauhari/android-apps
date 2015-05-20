@@ -10,12 +10,6 @@
     tools:context=".ProjectX">
 
     <TextView
-        android:id="@+id/tag_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-    <TextView
         android:id="@+id/to_do"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -28,7 +28,7 @@ public class ProjectX extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_x);
+        //setContentView(R.layout.activity_project_x);
 
         // get the adapter for NFC on the phone
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -65,12 +65,24 @@ public class ProjectX extends ActionBarActivity {
         super.onResume();
 
         Log.d(TAG, "intent is: " + getIntent().getAction());
+
+        // App opened by NFC tag
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            // ToDo: set the layout to the webview and fetch the content
+            setContentView(R.layout.activity_webview);
+
+            // get content from NFC tag
             readNFC();
+
+            // adding the fragment: to establish wifi connection automatically
+            getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
         }
 
-        // adding the fragment
-        getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+        //App opened by User
+        if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
+            // setting the layout where user chooses through buttons
+            setContentView(R.layout.activity_project_x);
+        }
     }
 
     @Override
