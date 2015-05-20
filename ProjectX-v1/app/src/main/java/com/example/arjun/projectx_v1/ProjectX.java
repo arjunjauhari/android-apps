@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -162,4 +163,13 @@ public class ProjectX extends ActionBarActivity {
         }
     }
 
+    public void dineIn(View view) {
+        Log.d(TAG, "dineIn");
+
+        // ToDo: set the layout to the webview and fetch the content
+        setContentView(R.layout.activity_webview);
+
+        // adding the fragment: to establish wifi connection automatically
+        getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+    }
 }
