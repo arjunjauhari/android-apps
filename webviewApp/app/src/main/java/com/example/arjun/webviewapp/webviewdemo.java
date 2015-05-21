@@ -27,7 +27,9 @@ public class webviewdemo extends ActionBarActivity {
 
         mWebView.getSettings().setLoadsImagesAutomatically(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl("http://www.google.com");
+//        mWebView.loadUrl("http://www.chandra.com");
+//        mWebView.loadUrl("http://192.168.1.4");
+        mWebView.loadUrl("http://10.42.0.1");
     }
 
     @Override

@@ -28,10 +28,12 @@ public class wifiConnector extends Fragment {
     public static final String TAG = "wifiConnector";
     private WifiManager mwifiManager;
     private WifiScanReceiver wifiReceiver;
-    private static final String ssid = "Nexus 5";
-    private static final String password = "mynexus5";
+    private static final String ssid = "NEO_ROBOT";
+    private static final String password = "neo_robot_is_up";
     //private static final String bssid = "c0:cb:38:97:d8:bb";
-    private static final String bssid = "02:1a:11:f4:fc:8f";
+    private static final String bssid = "e8:4e:06:27:76:d7";
+
+    //private static final String bssid = "bc:f6:85:db:39:f4";
     private WifiConfiguration mwifiConfig;
     private int netId;
 

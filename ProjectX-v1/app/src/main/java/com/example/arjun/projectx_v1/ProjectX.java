@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class ProjectX extends ActionBarActivity {
     private Tag my_tag;
     private Ndef ndef;
     private String tag_id;
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +73,25 @@ public class ProjectX extends ActionBarActivity {
         // App opened by NFC tag
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             // ToDo: set the layout to the webview and fetch the content
-            setContentView(R.layout.activity_webview);
+            //setContentView(R.layout.activity_webview);
+
+            setContentView(R.layout.activity_project_x);
 
             // get content from NFC tag
-            readNFC();
+            //readNFC();
 
             // adding the fragment: to establish wifi connection automatically
             getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+
         }
 
         //App opened by User
         if (Intent.ACTION_MAIN.equals(getIntent().getAction())) {
             // setting the layout where user chooses through buttons
             setContentView(R.layout.activity_project_x);
+
+            getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+
         }
     }
 
@@ -170,6 +179,32 @@ public class ProjectX extends ActionBarActivity {
         setContentView(R.layout.activity_webview);
 
         // adding the fragment: to establish wifi connection automatically
-        getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+        //getFragmentManager().beginTransaction().add(new wifiConnector(), "wifi").commit();
+
+        this.webDisp();
     }
+
+    private class MyBrowser extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
+    private void webDisp() {
+
+        Log.d(TAG, "webDisp");
+
+        // cleanup
+        mWebView = (WebView) findViewById(R.id.webView);
+        mWebView.setWebViewClient(new MyBrowser());
+
+        mWebView.getSettings().setLoadsImagesAutomatically(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.loadUrl("http://www.chandra.com");
+//        mWebView.loadUrl("http://192.168.1.4");
+        mWebView.loadUrl("http://10.42.0.1");
+    }
+
 }
