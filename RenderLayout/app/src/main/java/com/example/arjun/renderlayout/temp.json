@@ -1,0 +1,33 @@
+[
+  {"item1":
+  {
+    "id": 1,
+    "title": "Paneer Butter Masala",
+    "description": "\u003cp\u003e\n        Paneer + Masala prepared in butter.\n      \u003c/p\u003e",
+    "image_url": "paneer-butter-masala.jpg",
+    "price": "200.0",
+    "created_at": "2015-05-10T09:04:06.534Z",
+    "updated_at": "2015-05-10T09:04:06.534Z"
+  },
+    "item2":
+  {
+    "id": 2,
+    "title": "Jeera rice",
+    "description": "\u003cp\u003e\n        Rice in jeera tadka.\n      \u003c/p\u003e",
+    "image_url": "jeera-rice.png",
+    "price": "100.0",
+    "created_at": "2015-05-10T09:04:06.671Z",
+    "updated_at": "2015-05-10T09:04:06.671Z"
+  },
+    "item3":
+  {
+    "id": 6,
+    "title": "Chicken Tikka",
+    "description": "Chicken + Tikka",
+    "image_url": "chicken_tikka.jpg",
+    "price": "300.0",
+    "created_at": "2015-05-11T14:31:47.945Z",
+    "updated_at": "2015-05-11T14:31:47.945Z"
+  }
+  }
+]

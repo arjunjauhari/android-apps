@@ -1,4 +1,4 @@
-package com.example.arjun.httpclient;
+package com.example.arjun.renderlayout;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,17 +12,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class httpClient extends ActionBarActivity {
+public class RenderLayout extends ActionBarActivity {
 
     //private static final String url = "http://www.google.com";
     private static final String url = "http://192.168.1.16/products";
@@ -32,7 +34,7 @@ public class httpClient extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_http_client);
+        setContentView(R.layout.activity_render_layout);
         textView_out = (TextView) findViewById(R.id.textView_out);
 
         // Check for network availability
@@ -60,7 +62,20 @@ public class httpClient extends ActionBarActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(Object result) {
-            textView_out.setText(result.toString());
+            jsonParser(result.toString());
+        }
+
+    }
+
+    private void jsonParser(String in) {
+
+        try {
+            //Create a jsonObject
+            JSONObject reader = new JSONObject(in);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
     }
@@ -108,7 +123,7 @@ public class httpClient extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_http_client, menu);
+        getMenuInflater().inflate(R.menu.menu_render_layout, menu);
         return true;
     }
 
